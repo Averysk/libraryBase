@@ -1,0 +1,3 @@
+rootProject.name = "DemoBase"
+include ':app'
+include ':libraryBase'

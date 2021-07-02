@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自适应文本字体大小的TextView-->
+    <declare-styleable name="AutofitTextView">
+        <!-- Minimum size of the text. -->
+        <attr name="autofitMinTextSize" format="dimension" />
+        <!-- Amount of precision used to calculate the correct text size to fit within its
+        bounds. Lower precision is more precise and takes more time. -->
+        <attr name="autofitPrecision" format="float" />
+        <!-- Defines whether to automatically resize text to fit to the view's bounds. -->
+        <attr name="autofitSizeToFit" format="boolean" />
+    </declare-styleable>
+
+    <!--自定义的圆形的ImageView-->
+    <declare-styleable name="CircleImageView">
+        <!-- 圆形边界边框大小 -->
+        <attr name="circleImageBorderWidth" format="dimension|reference" />
+        <!-- 圆形边界边框颜色 -->
+        <attr name="circleImageBorderColor" format="integer|reference" />
+    </declare-styleable>
+
+    <!--自定义的圆形的提示器-->
+    <declare-styleable name="CirclePageIndicator">
+        <!-- 圆形提示器页面颜色 -->
+        <attr name="circlePageIndicatorPageColor" format="integer|reference" />
+        <!-- 圆形提示器填充颜色 -->
+        <attr name="circlePageIndicatorFillColor" format="integer|reference" />
+        <!-- 圆形提示器描边颜色 -->
+        <attr name="circlePageIndicatorStrokeColor" format="integer|reference" />
+        <!-- 圆形提示器描边大小 -->
+        <attr name="circlePageIndicatorStrokeWidth" format="dimension|reference" />
+        <!-- 圆形提示器半径大小 -->
+        <attr name="circlePageIndicatorRadius" format="dimension|reference" />
+        <!-- 圆形提示器是否默认自动居中 -->
+        <attr name="circlePageIndicatorCentered" format="boolean"/>
+    </declare-styleable>
+
+</resources>
