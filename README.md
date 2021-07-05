@@ -12,7 +12,9 @@
 1.09 StatusBarUtil           状态栏工具类
 1.10 StringDesignUtil        字符串设计工具类
 1.11 StringUtil              String工具类
-1.12 ...
+1.12 ValidateUtil            通用的校验判断工具类
+1.13 ViewUtil                View常用工具类
+1.14 ...
 
 2. 组件类 widget
 2.01 CircleImageView         圆形图片
