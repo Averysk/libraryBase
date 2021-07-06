@@ -17,39 +17,67 @@ import java.util.TimeZone;
 @SuppressLint("SimpleDateFormat")
 public class DataUtil {
 
-    public static String DATA_FORMAT_01 = "yyyyMMddHHmmssSSS";
-    public static String DATA_FORMAT_02 = "yyyy-MM-dd HH:mm:ss:SSS";
-    public static String DATA_FORMAT_03 = "yyyy.MM.dd HH:mm:ss:SSS";
-    public static String DATA_FORMAT_04 = "yyyyMMddHHmmss";
-    public static String DATA_FORMAT_05 = "yyyy-MM-dd HH:mm:ss";
-    public static String DATA_FORMAT_06 = "yyyy.MM.dd HH:mm:ss";
-    public static String DATA_FORMAT_07 = "yyyyMMddHHmm";
-    public static String DATA_FORMAT_08 = "yyyy-MM-dd HH:mm";
-    public static String DATA_FORMAT_09 = "yyyy.MM.dd HH:mm";
-    public static String DATA_FORMAT_10 = "yyyyMMddHH";
-    public static String DATA_FORMAT_11 = "yyyy-MM-dd HH";
-    public static String DATA_FORMAT_12 = "yyyy.MM.dd HH";
-    public static String DATA_FORMAT_13 = "yyyyMMdd";
-    public static String DATA_FORMAT_14 = "yyyy-MM-dd";
-    public static String DATA_FORMAT_15 = "yyyy.MM.dd";
-    public static String DATA_FORMAT_16 = "yyyyMM";
-    public static String DATA_FORMAT_17 = "yyyy-MM";
-    public static String DATA_FORMAT_18 = "yyyy.MM";
-    public static String DATA_FORMAT_19 = "yyyy";
+    public static String DATA_FORMAT_01 = "yyyy";
+    public static String DATA_FORMAT_02 = "yyyyMM";
+    public static String DATA_FORMAT_03 = "yyyy-MM";
+    public static String DATA_FORMAT_04 = "yyyy.MM";
+    public static String DATA_FORMAT_05 = "yyyyMMdd";
+    public static String DATA_FORMAT_06 = "yyyy-MM-dd";
+    public static String DATA_FORMAT_07 = "yyyy.MM.dd";
+    public static String DATA_FORMAT_08 = "yyyyMMddHH";
+    public static String DATA_FORMAT_09 = "yyyy-MM-dd HH";
+    public static String DATA_FORMAT_10 = "yyyy.MM.dd HH";
+    public static String DATA_FORMAT_11 = "yyyyMMddHHmm";
+    public static String DATA_FORMAT_12 = "yyyy-MM-dd HH:mm";
+    public static String DATA_FORMAT_13 = "yyyy.MM.dd HH:mm";
+    public static String DATA_FORMAT_14 = "yyyyMMddHHmmss";
+    public static String DATA_FORMAT_15 = "yyyy-MM-dd HH:mm:ss";
+    public static String DATA_FORMAT_16 = "yyyy.MM.dd HH:mm:ss";
+    public static String DATA_FORMAT_17 = "yyyyMMddHHmmssSSS";
+    public static String DATA_FORMAT_18 = "yyyy-MM-dd HH:mm:ss:SSS";
+    public static String DATA_FORMAT_19 = "yyyy.MM.dd HH:mm:ss:SSS";
     public static String DATA_FORMAT_20 = "MM";
-    public static String DATA_FORMAT_21 = "DD";
-    public static String DATA_FORMAT_22 = "MMdd";
-    public static String DATA_FORMAT_23 = "MM-dd";
-    public static String DATA_FORMAT_24 = "MM.dd";
-    public static String DATA_FORMAT_25 = "MMddHH";
-    public static String DATA_FORMAT_26 = "MM-dd HH";
-    public static String DATA_FORMAT_27 = "MM.dd HH";
-    public static String DATA_FORMAT_28 = "MMddHHmm";
-    public static String DATA_FORMAT_29 = "MM-dd HH:mm";
-    public static String DATA_FORMAT_30 = "MM.dd HH:mm";
-    public static String DATA_FORMAT_31 = "MMddHHmmss";
-    public static String DATA_FORMAT_32 = "MM-dd HH:mm:ss";
-    public static String DATA_FORMAT_33 = "MM.dd HH:mm:ss";
+    public static String DATA_FORMAT_21 = "MMdd";
+    public static String DATA_FORMAT_22 = "MM-dd";
+    public static String DATA_FORMAT_23 = "MM.dd";
+    public static String DATA_FORMAT_24 = "MMddHH";
+    public static String DATA_FORMAT_25 = "MM-dd HH";
+    public static String DATA_FORMAT_26 = "MM.dd HH";
+    public static String DATA_FORMAT_27 = "MMddHHmm";
+    public static String DATA_FORMAT_28 = "MM-dd HH:mm";
+    public static String DATA_FORMAT_29 = "MM.dd HH:mm";
+    public static String DATA_FORMAT_30 = "MMddHHmmss";
+    public static String DATA_FORMAT_31 = "MM-dd HH:mm:ss";
+    public static String DATA_FORMAT_32 = "MM.dd HH:mm:ss";
+    public static String DATA_FORMAT_33 = "MMddHHmmssSSS";
+    public static String DATA_FORMAT_34 = "MM-dd HH:mm:ss:SSS";
+    public static String DATA_FORMAT_35 = "MM.dd HH:mm:ss:SSS";
+    public static String DATA_FORMAT_36 = "dd";
+    public static String DATA_FORMAT_37 = "ddHH";
+    public static String DATA_FORMAT_38 = "dd HH";
+    public static String DATA_FORMAT_39 = "ddHHmm";
+    public static String DATA_FORMAT_40 = "dd HH:mm";
+    public static String DATA_FORMAT_41 = "ddHHmmss";
+    public static String DATA_FORMAT_42 = "dd HH:mm:ss";
+    public static String DATA_FORMAT_43 = "ddHHmmssSSS";
+    public static String DATA_FORMAT_44 = "dd HH:mm:ss:SSS";
+    public static String DATA_FORMAT_45 = "HH";
+    public static String DATA_FORMAT_46 = "HHmm";
+    public static String DATA_FORMAT_47 = "HH:mm";
+    public static String DATA_FORMAT_48 = "HHmmss";
+    public static String DATA_FORMAT_49 = "HH:mm:ss";
+    public static String DATA_FORMAT_50 = "HHmmssSSS";
+    public static String DATA_FORMAT_51 = "HH:mm:ss:SSS";
+    public static String DATA_FORMAT_52 = "mm";
+    public static String DATA_FORMAT_53 = "mmss";
+    public static String DATA_FORMAT_54 = "mm:ss";
+    public static String DATA_FORMAT_55 = "mmssSSS";
+    public static String DATA_FORMAT_56 = "mm:ss:SSS";
+    public static String DATA_FORMAT_57 = "ss";
+    public static String DATA_FORMAT_58 = "ssSSS";
+    public static String DATA_FORMAT_59 = "ss:SSS";
+    public static String DATA_FORMAT_60 = "SSS";
+
 
     /**
      * 获取当前系统时间
@@ -268,10 +296,10 @@ public class DataUtil {
      * @return 相差天数
      */
     public static int getDaysBetween(Date smdate, Date bdate) {
-        String smDateStr = getStringData(smdate, DATA_FORMAT_13);
-        String bDateStr = getStringData(bdate, DATA_FORMAT_13);
-        Date smDateNew = getDataFromStringData(smDateStr, DATA_FORMAT_13);
-        Date bDateNew = getDataFromStringData(bDateStr, DATA_FORMAT_13);
+        String smDateStr = getStringData(smdate, DATA_FORMAT_05);
+        String bDateStr = getStringData(bdate, DATA_FORMAT_05);
+        Date smDateNew = getDataFromStringData(smDateStr, DATA_FORMAT_05);
+        Date bDateNew = getDataFromStringData(bDateStr, DATA_FORMAT_05);
         if (smDateNew != null && bDateNew != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(smDateNew);
@@ -298,8 +326,8 @@ public class DataUtil {
         if (bdate.length() >= 8) {
             bdate = bdate.substring(0, 8);
         }
-        Date smDateNew = getDataFromStringData(smdate, DATA_FORMAT_13);
-        Date bDateNew = getDataFromStringData(bdate, DATA_FORMAT_13);
+        Date smDateNew = getDataFromStringData(smdate, DATA_FORMAT_05);
+        Date bDateNew = getDataFromStringData(bdate, DATA_FORMAT_05);
         if (smDateNew != null && bDateNew != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(smDateNew);
