@@ -625,13 +625,17 @@ public class StatusBarUtil {
      */
     public static void hideBottomUIMenu(Activity activity) {
         //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT < 19) { // lower api
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { // lower api
             View v = activity.getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
         } else {
-            View decorView = activity.getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
+            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                    View.SYSTEM_UI_FLAG_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
         }
     }
 
