@@ -636,6 +636,11 @@ public class StatusBarUtil {
                     View.SYSTEM_UI_FLAG_FULLSCREEN |
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                WindowManager.LayoutParams lp  = activity.getWindow().getAttributes();
+                lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                activity.getWindow().setAttributes(lp);
+            }
         }
     }
 
