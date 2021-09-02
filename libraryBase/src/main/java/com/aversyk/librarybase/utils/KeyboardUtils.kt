@@ -1,55 +1,46 @@
-package com.aversyk.librarybase.utils;
+package com.aversyk.librarybase.utils
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import java.util.List;
+import android.app.Activity
+import android.app.Dialog
+import android.content.Context
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.TextView
 
 /**
  * 软键盘工具
  *
  * @author Averysk
  */
-public class KeyboardUtils {
-
+object KeyboardUtils {
     // 显示软键盘
-    public static void showKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            view.requestFocus();
-            imm.showSoftInput(view, 0);
-        }
+    fun showKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        view.requestFocus()
+        imm.showSoftInput(view, 0)
     }
 
     // 隐藏软键盘
-    public static void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+    fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     // 隐藏软键盘
-    public static void hideKeyboard(Dialog dialog) {
-        View view = dialog.getCurrentFocus();
-        if (view instanceof TextView) {
-            InputMethodManager mInputMethodManager = (InputMethodManager) dialog.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            mInputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+    fun hideKeyboard(dialog: Dialog) {
+        val view = dialog.currentFocus
+        if (view is TextView) {
+            val mInputMethodManager = dialog.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            mInputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN)
         }
     }
 
     // 软键盘在显示和隐藏之间切换
-    public static void toggleSoftInput(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-        }
+    fun toggleSoftInput(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
     /**
@@ -59,47 +50,42 @@ public class KeyboardUtils {
      * @param ev           事件
      * @param excludeViews 点击这些View不会触发隐藏软键盘动作
      */
-    public static void hideInputWhenTouchOtherView(Activity activity, MotionEvent ev, List<View> excludeViews) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            if (excludeViews != null && !excludeViews.isEmpty()) {
-                for (int i = 0; i < excludeViews.size(); i++) {
-                    if (isTouchView(excludeViews.get(i), ev)) {
-                        return;
+    fun hideInputWhenTouchOtherView(activity: Activity, ev: MotionEvent, excludeViews: List<View?>?) {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            if (excludeViews != null && excludeViews.isNotEmpty()) {
+                for (i in excludeViews.indices) {
+                    if (isTouchView(excludeViews[i], ev)) {
+                        return
                     }
                 }
             }
-            View v = activity.getCurrentFocus();
+            val v:View? = activity.currentFocus
             if (isShouldHideInput(v, ev)) {
-                InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (inputMethodManager != null) {
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
+                val inputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(v?.windowToken, 0)
             }
         }
     }
 
-    public static boolean isTouchView(View view, MotionEvent event) {
+    fun isTouchView(view: View?, event: MotionEvent?): Boolean {
         if (view == null || event == null) {
-            return false;
+            return false
         }
-        int[] leftTop = {0, 0};
-        view.getLocationInWindow(leftTop);
-        int left = leftTop[0];
-        int top = leftTop[1];
-        int bottom = top + view.getHeight();
-        int right = left + view.getWidth();
-        if (event.getRawX() > left && event.getRawX() < right && event.getRawY() > top && event.getRawY() < bottom) {
-            return true;
-        }
-        return false;
+        val leftTop = intArrayOf(0, 0)
+        view.getLocationInWindow(leftTop)
+        val left = leftTop[0]
+        val top = leftTop[1]
+        val bottom = top + view.height
+        val right = left + view.width
+        return event.rawX > left && event.rawX < right && event.rawY > top && event.rawY < bottom
     }
 
-    public static boolean isShouldHideInput(View v, MotionEvent event) {
+    fun isShouldHideInput(v: View?, event: MotionEvent?): Boolean {
         if (v != null) {
-            if (v instanceof EditText) {
-                return !isTouchView(v, event);
+            if (v is EditText) {
+                return !isTouchView(v, event)
             }
         }
-        return false;
+        return false
     }
 }

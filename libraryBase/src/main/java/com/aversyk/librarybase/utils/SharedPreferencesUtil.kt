@@ -1,34 +1,18 @@
-package com.aversyk.librarybase.utils;
+package com.aversyk.librarybase.utils
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Base64;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Base64
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.*
 
 /**
  * 应用存储数据的公共缓存
  *
  * @author Averysk
  */
-public class SharedPreferencesUtil {
-
-    private static SharedPreferencesUtil instance = null;
-
-    public static SharedPreferencesUtil getInstance() {
-        if (instance == null) {
-            instance = new SharedPreferencesUtil();
-        }
-        return instance;
-    }
+object SharedPreferencesUtil {
 
     /**
      * 保存对象实体 - 需实现 Serializable
@@ -39,41 +23,38 @@ public class SharedPreferencesUtil {
      * @param ob      // 缓存对你
      * @return boolean  // 是否成功
      */
-    public boolean savaObject(Context context, String spName, String key, Object ob) {
+    fun savaObject(context: Context?, spName: String?, key: String?, ob: Any?): Boolean {
         if (context == null) {
-            return false;
+            return false
         }
         if (ob == null) {
-            return false;
+            return false
         }
-        boolean falg = false;
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
+        var falg = false
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
         // 创建字节输出
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = null;
+        var baos: ByteArrayOutputStream? = null
+        var oos: ObjectOutputStream? = null
         try {
             // 创建对象输出流，并封装字节流
-            oos = new ObjectOutputStream(baos);
+            baos = ByteArrayOutputStream()
+            oos = ObjectOutputStream(baos)
             // 将对象写入字节流
-            oos.writeObject(ob);
+            oos.writeObject(ob)
             // 将字节流编码成base64的字符窜
-            String oAuth_Base64 = new String(Base64.encode(baos.toByteArray(), Base64.DEFAULT));
-            falg = preferences.edit().putString(key, oAuth_Base64).commit();
-        } catch (IOException e) {
-            e.printStackTrace();
+            val oAuthBase64 = String(Base64.encode(baos.toByteArray(), Base64.DEFAULT))
+            falg = preferences.edit().putString(key, oAuthBase64).commit()
+        } catch (e: IOException) {
+            e.printStackTrace()
         } finally {
             try {
-                if (oos != null) {
-                    oos.close();
-                }
-                if (baos != null) {
-                    baos.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                oos?.close()
+                baos?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
-        return falg;
+        return falg
     }
 
     /**
@@ -84,38 +65,35 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @return Object   // 对象实体
      */
-    public Object getObject(Context context, String spName, String key) {
+    fun getObject(context: Context?, spName: String?, key: String?): Any? {
         if (context == null) {
-            return null;
+            return null
         }
-        Object ob = null;
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        String productBase64 = preferences.getString(key, "");
+        var ob: Any? = null
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        val productBase64: String? = preferences.getString(key, "")
         // 读取字节
-        byte[] base64 = Base64.decode(productBase64.getBytes(), Base64.DEFAULT);
+        val base64 = Base64.decode(productBase64?.toByteArray(), Base64.DEFAULT)
         // 封装到字节流
-        ByteArrayInputStream bais = new ByteArrayInputStream(base64);
-        ObjectInputStream bis = null;
+        var bais: ByteArrayInputStream? = null
+        var bis: ObjectInputStream? = null
         try {
             // 再次封装
-            bis = new ObjectInputStream(bais);
+            bais = ByteArrayInputStream(base64)
+            bis = ObjectInputStream(bais)
             // 读取对象
-            ob = bis.readObject();
-        } catch (Exception e) {
+            ob = bis.readObject()
+        } catch (e: Exception) {
             // e.printStackTrace();
         } finally {
             try {
-                if (bis != null) {
-                    bis.close();
-                }
-                if (bais != null) {
-                    bais.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                bis?.close()
+                bais?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
         }
-        return ob;
+        return ob
     }
 
     /**
@@ -126,12 +104,12 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      */
     @SuppressLint("CommitPrefEdits")
-    public void removeAct(Context context, String spName, String key) {
+    fun removeAct(context: Context?, spName: String?, key: String?) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        preferences.edit().remove(key).apply();
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        preferences.edit().remove(key).apply()
     }
 
     /**
@@ -140,14 +118,14 @@ public class SharedPreferencesUtil {
      * @param context // 建议使用ApplicationContext
      * @param spName  // 缓存名称
      */
-    public void clearByFileName(Context context, String spName) {
+    fun clearByFileName(context: Context?, spName: String?) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
         // 使用 apply() 代替； commit() 立即将其数据写入持久存储，而 apply() 将在后台处理它
         //preferences.edit().clear().commit();
-        preferences.edit().clear().apply();
+        preferences.edit().clear().apply()
     }
 
     /**
@@ -158,12 +136,12 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @param value   // int数据
      */
-    public void setIntValue(Context context, String spName, String key, int value) {
+    fun setIntValue(context: Context?, spName: String?, key: String?, value: Int) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        preferences.edit().putInt(key, value).apply();
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        preferences.edit().putInt(key, value).apply()
     }
 
     /**
@@ -174,8 +152,8 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @return int
      */
-    public int getIntValue(Context context, String spName, String key) {
-        return getIntValue(context, spName, key, 0);
+    fun getIntValue(context: Context?, spName: String?, key: String?): Int {
+        return getIntValue(context, spName, key, 0)
     }
 
     /**
@@ -187,12 +165,12 @@ public class SharedPreferencesUtil {
      * @param defValue // 未数据数据返回的默认值
      * @return int
      */
-    public int getIntValue(Context context, String spName, String key, int defValue) {
+    fun getIntValue(context: Context?, spName: String?, key: String?, defValue: Int): Int {
         if (context == null) {
-            return defValue;
+            return defValue
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        return preferences.getInt(key, defValue);
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        return preferences.getInt(key, defValue)
     }
 
     /**
@@ -203,12 +181,12 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @param value   // float数据
      */
-    public void setFloatValue(Context context, String spName, String key, float value) {
+    fun setFloatValue(context: Context?, spName: String?, key: String?, value: Float) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        preferences.edit().putFloat(key, value).apply();
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        preferences.edit().putFloat(key, value).apply()
     }
 
     /**
@@ -219,8 +197,8 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @return float
      */
-    public float getFloatValue(Context context, String spName, String key) {
-        return getFloatValue(context, spName, key, 0);
+    fun getFloatValue(context: Context?, spName: String?, key: String?): Float {
+        return getFloatValue(context, spName, key, 0f)
     }
 
     /**
@@ -232,12 +210,12 @@ public class SharedPreferencesUtil {
      * @param defValue // 未数据数据返回的默认值
      * @return float
      */
-    public float getFloatValue(Context context, String spName, String key, float defValue) {
+    fun getFloatValue(context: Context?, spName: String?, key: String?, defValue: Float): Float {
         if (context == null) {
-            return defValue;
+            return defValue
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        return preferences.getFloat(key, defValue);
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        return preferences.getFloat(key, defValue)
     }
 
     /**
@@ -248,12 +226,12 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @param value   // boolean数据
      */
-    public void setBooleanValue(Context context, String spName, String key, boolean value) {
+    fun setBooleanValue(context: Context?, spName: String?, key: String?, value: Boolean) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        preferences.edit().putBoolean(key, value).apply();
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        preferences.edit().putBoolean(key, value).apply()
     }
 
     /**
@@ -264,8 +242,8 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @return boolean
      */
-    public boolean getBooleanValue(Context context, String spName, String key) {
-        return getBooleanValue(context, spName, key, false);
+    fun getBooleanValue(context: Context?, spName: String?, key: String?): Boolean {
+        return getBooleanValue(context, spName, key, false)
     }
 
     /**
@@ -277,12 +255,12 @@ public class SharedPreferencesUtil {
      * @param defValue // 未数据数据返回的默认值
      * @return boolean
      */
-    public boolean getBooleanValue(Context context, String spName, String key, boolean defValue) {
+    fun getBooleanValue(context: Context?, spName: String?, key: String?, defValue: Boolean): Boolean {
         if (context == null) {
-            return defValue;
+            return defValue
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        return preferences.getBoolean(key, defValue);
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        return preferences.getBoolean(key, defValue)
     }
 
     /**
@@ -293,12 +271,12 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @param value   // long数据
      */
-    public void setLongValue(Context context, String spName, String key, long value) {
+    fun setLongValue(context: Context?, spName: String?, key: String?, value: Long) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        preferences.edit().putLong(key, value).apply();
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        preferences.edit().putLong(key, value).apply()
     }
 
     /**
@@ -309,8 +287,8 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @return long
      */
-    public long getLongValue(Context context, String spName, String key) {
-        return getLongValue(context, spName, key, 0);
+    fun getLongValue(context: Context?, spName: String?, key: String?): Long {
+        return getLongValue(context, spName, key, 0)
     }
 
     /**
@@ -322,12 +300,12 @@ public class SharedPreferencesUtil {
      * @param defValue // 未数据数据返回的默认值
      * @return long
      */
-    public long getLongValue(Context context, String spName, String key, long defValue) {
+    fun getLongValue(context: Context?, spName: String?, key: String?, defValue: Long): Long {
         if (context == null) {
-            return defValue;
+            return defValue
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        return preferences.getLong(key, defValue);
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        return preferences.getLong(key, defValue)
     }
 
     /**
@@ -338,12 +316,12 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @param value   // String数据
      */
-    public void setStringValue(Context context, String spName, String key, String value) {
+    fun setStringValue(context: Context?, spName: String?, key: String?, value: String?) {
         if (context == null) {
-            return;
+            return
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        preferences.edit().putString(key, value).apply();
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        preferences.edit().putString(key, value).apply()
     }
 
     /**
@@ -354,8 +332,8 @@ public class SharedPreferencesUtil {
      * @param key     // 缓存键值
      * @return String
      */
-    public String getStringValue(Context context, String spName, String key) {
-        return getStringValue(context, spName, key, "");
+    fun getStringValue(context: Context?, spName: String?, key: String?): String? {
+        return getStringValue(context, spName, key, "")
     }
 
     /**
@@ -367,16 +345,15 @@ public class SharedPreferencesUtil {
      * @param defValue // 未数据数据返回的默认值
      * @return String
      */
-    public String getStringValue(Context context, String spName, String key, String defValue) {
+    fun getStringValue(context: Context?, spName: String?, key: String?, defValue: String): String? {
         if (context == null) {
-            return defValue;
+            return defValue
         }
-        SharedPreferences preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
-        return preferences.getString(key, defValue);
+        val preferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        return preferences.getString(key, defValue)
     }
 
-
-    private JSONObject json = null;
+    private var json: JSONObject? = null
 
     /**
      * 以Json的数据形式存储
@@ -388,19 +365,19 @@ public class SharedPreferencesUtil {
      * @param jsonKeyName  // Json的数据对象缓存的参数名
      * @throws JSONException
      */
-    public void saveJsonChache(Context context, String spName, String valueKeyName, String value, String jsonKeyName) {
+    fun saveJsonChache(context: Context?, spName: String?, valueKeyName: String, value: String?, jsonKeyName: String?) {
         if (context == null) {
-            return;
+            return
         }
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(valueKeyName, value);
+            val jsonObject = JSONObject()
+            jsonObject.put(valueKeyName, value)
             if (json == null) {
-                json = new JSONObject();
+                json = JSONObject()
             }
-            json.put(jsonKeyName, jsonObject.toString());
-            setStringValue(context, spName, valueKeyName + "Chache", json.toString());
-        } catch (JSONException e) {
+            json!!.put(jsonKeyName, jsonObject.toString())
+            setStringValue(context, spName, valueKeyName + "Chache", json.toString())
+        } catch (e: JSONException) {
             //e.printStackTrace();
         }
     }
@@ -415,35 +392,34 @@ public class SharedPreferencesUtil {
      * @param jsonKeyName  // Json的数据对象缓存的参数名
      * @throws JSONException
      */
-    public String getJsonCache(Context context, String spName, String valueKeyName, String jsonKeyName) {
+    fun getJsonCache(context: Context?, spName: String?, valueKeyName: String, jsonKeyName: String?): String? {
         if (context == null) {
-            return "";
+            return ""
         }
-        String str = getStringValue(context, spName, valueKeyName + "Chache", "");
-        String returnStr = null;
+        val str = getStringValue(context, spName, valueKeyName + "Chache", "")
+        var returnStr: String? = null
         try {
-            if (str.isEmpty()) {
-                json = new JSONObject();
+            json = if (str?.isEmpty() == true) {
+                JSONObject()
             } else {
-                json = new JSONObject(str);
+                JSONObject(str)
             }
-            returnStr = "";
-            if (json.has(jsonKeyName)) {
-                String chacheStr = json.optString(jsonKeyName);
+            returnStr = ""
+            if (json!!.has(jsonKeyName)) {
+                val chacheStr = json!!.optString(jsonKeyName)
                 if (chacheStr.isEmpty()) {
-                    returnStr = "";
+                    returnStr = ""
                 } else {
-                    JSONObject job = new JSONObject(chacheStr);
-                    String value = job.optString(valueKeyName);
+                    val job = JSONObject(chacheStr)
+                    val value = job.optString(valueKeyName)
                     if (!value.isEmpty()) {
-                        returnStr = value;
+                        returnStr = value
                     }
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (e: JSONException) {
+            e.printStackTrace()
         }
-        return returnStr;
+        return returnStr
     }
-
 }

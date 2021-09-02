@@ -1,13 +1,13 @@
-package com.aversyk.librarybase.utils;
+package com.aversyk.librarybase.utils
 
-import java.util.Random;
+import java.util.*
 
 /**
  * 随机数生成
  *
  * @author Averysk
  */
-public class RandomUntil {
+object RandomUntil {
 
     /**
      * 生成一个0 到 count 之间的随机数
@@ -15,12 +15,12 @@ public class RandomUntil {
      * @param endNum
      * @return
      */
-    public static int getNum(int endNum) {
+    fun getNum(endNum: Int): Int {
         if (endNum > 0) {
-            Random random = new Random();
-            return random.nextInt(endNum);
+            val random = Random()
+            return random.nextInt(endNum)
         }
-        return 0;
+        return 0
     }
 
     /**
@@ -30,12 +30,12 @@ public class RandomUntil {
      * @param endNum
      * @return
      */
-    public static int getNum(int startNum, int endNum) {
+    fun getNum(startNum: Int, endNum: Int): Int {
         if (endNum > startNum) {
-            Random random = new Random();
-            return random.nextInt(endNum - startNum) + startNum;
+            val random = Random()
+            return random.nextInt(endNum - startNum) + startNum
         }
-        return 0;
+        return 0
     }
 
     /**
@@ -44,14 +44,14 @@ public class RandomUntil {
      * @param size 指定位数
      * @return
      */
-    public static String getNumAppoint(int size) {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < size; i++) {
+    fun getNumAppoint(size: Int): String {
+        val buffer = StringBuffer()
+        val random = Random()
+        for (i in 0 until size) {
             //数字
-            buffer.append(random.nextInt(10));
+            buffer.append(random.nextInt(10))
         }
-        return buffer.toString();
+        return buffer.toString()
     }
 
     /**
@@ -59,10 +59,11 @@ public class RandomUntil {
      *
      * @return
      */
-    public static String getLargeLetter() {
-        Random random = new Random();
-        return String.valueOf((char) (random.nextInt(25) + 'A'));
-    }
+    val largeLetter: String
+        get() {
+            val random = Random()
+            return (random.nextInt(25) + 'A'.toInt()).toChar().toString()
+        }
 
     /**
      * 生成随机大写字母字符串(指定位数)
@@ -70,13 +71,13 @@ public class RandomUntil {
      * @param size 指定位数
      * @return
      */
-    public static String getLargeLetter(int size) {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < size; i++) {
-            buffer.append((char) (random.nextInt(25) + 'A'));
+    fun getLargeLetter(size: Int): String {
+        val buffer = StringBuffer()
+        val random = Random()
+        for (i in 0 until size) {
+            buffer.append((random.nextInt(25) + 'A'.toInt()).toChar())
         }
-        return buffer.toString();
+        return buffer.toString()
     }
 
     /**
@@ -84,10 +85,11 @@ public class RandomUntil {
      *
      * @return
      */
-    public static String getSmallLetter() {
-        Random random = new Random();
-        return String.valueOf((char) (random.nextInt(25) + 'a'));
-    }
+    val smallLetter: String
+        get() {
+            val random = Random()
+            return (random.nextInt(25) + 'a'.toInt()).toChar().toString()
+        }
 
     /**
      * 生成随机小写字母字符串(指定位数)
@@ -95,13 +97,13 @@ public class RandomUntil {
      * @param size 指定位数
      * @return
      */
-    public static String getSmallLetter(int size) {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < size; i++) {
-            buffer.append((char) (random.nextInt(25) + 'a'));
+    fun getSmallLetter(size: Int): String {
+        val buffer = StringBuffer()
+        val random = Random()
+        for (i in 0 until size) {
+            buffer.append((random.nextInt(25) + 'a'.toInt()).toChar())
         }
-        return buffer.toString();
+        return buffer.toString()
     }
 
     /**
@@ -110,17 +112,17 @@ public class RandomUntil {
      * @param size 指定位数
      * @return
      */
-    public static String getNumSmallLetter(int size) {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < size; i++) {
-            if (random.nextInt(2) % 2 == 0) {//字母
-                buffer.append((char) (random.nextInt(25) + 'a'));
-            } else {//数字
-                buffer.append(random.nextInt(10));
+    fun getNumSmallLetter(size: Int): String {
+        val buffer = StringBuffer()
+        val random = Random()
+        for (i in 0 until size) {
+            if (random.nextInt(2) % 2 == 0) { //字母
+                buffer.append((random.nextInt(25) + 'a'.toInt()).toChar())
+            } else { //数字
+                buffer.append(random.nextInt(10))
             }
         }
-        return buffer.toString();
+        return buffer.toString()
     }
 
     /**
@@ -129,17 +131,17 @@ public class RandomUntil {
      * @param size 指定位数
      * @return
      */
-    public static String getNumLargeLetter(int size) {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < size; i++) {
-            if (random.nextInt(2) % 2 == 0) {//字母
-                buffer.append((char) (random.nextInt(25) + 'A'));
-            } else {//数字
-                buffer.append(random.nextInt(10));
+    fun getNumLargeLetter(size: Int): String {
+        val buffer = StringBuffer()
+        val random = Random()
+        for (i in 0 until size) {
+            if (random.nextInt(2) % 2 == 0) { //字母
+                buffer.append((random.nextInt(25) + 'A'.toInt()).toChar())
+            } else { //数字
+                buffer.append(random.nextInt(10))
             }
         }
-        return buffer.toString();
+        return buffer.toString()
     }
 
     /**
@@ -148,20 +150,20 @@ public class RandomUntil {
      * @param size 指定位数
      * @return
      */
-    public static String getNumLargeSmallLetter(int size) {
-        StringBuffer buffer = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < size; i++) {
-            if (random.nextInt(2) % 2 == 0) {//字母
+    fun getNumLargeSmallLetter(size: Int): String {
+        val buffer = StringBuffer()
+        val random = Random()
+        for (i in 0 until size) {
+            if (random.nextInt(2) % 2 == 0) { //字母
                 if (random.nextInt(2) % 2 == 0) {
-                    buffer.append((char) (random.nextInt(25) + 'A'));
+                    buffer.append((random.nextInt(25) + 'A'.toInt()).toChar())
                 } else {
-                    buffer.append((char) (random.nextInt(25) + 'a'));
+                    buffer.append((random.nextInt(25) + 'a'.toInt()).toChar())
                 }
-            } else {//数字
-                buffer.append(random.nextInt(10));
+            } else { //数字
+                buffer.append(random.nextInt(10))
             }
         }
-        return buffer.toString();
+        return buffer.toString()
     }
 }

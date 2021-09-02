@@ -1,29 +1,27 @@
-package com.aversyk.librarybase.utils;
+package com.aversyk.librarybase.utils
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 /**
  * TextView添加图片工具类
  * @author Averysk
  */
-public class ImageToolUtil {
-
+object ImageToolUtil {
     /**
      * 设置TextView左边图片
      * @param srcId
      */
-    public static void serLeftIcon(Context context, TextView tv, int srcId) {
+    fun serLeftIcon(context: Context?, tv: TextView, srcId: Int) {
         if (context == null) {
-            return;
+            return
         }
-        Drawable db = ContextCompat.getDrawable(context, srcId);
+        val db: Drawable? = ContextCompat.getDrawable(context, srcId)
         if (db != null) {
-            db.setBounds(0, 0, db.getMinimumWidth(), db.getMinimumHeight());
-            tv.setCompoundDrawables(db, null, null, null);
+            db.setBounds(0, 0, db.minimumWidth, db.minimumHeight)
+            tv.setCompoundDrawables(db, null, null, null)
         }
     }
 
@@ -31,16 +29,14 @@ public class ImageToolUtil {
      * 设置TextView右边图片
      * @param srcId
      */
-    public static void serRightIcon(Context context, TextView tv, int srcId) {
+    fun serRightIcon(context: Context?, tv: TextView, srcId: Int) {
         if (context == null) {
-            return;
+            return
         }
-        Drawable db = ContextCompat.getDrawable(context, srcId);
+        val db: Drawable? = ContextCompat.getDrawable(context, srcId)
         if (db != null) {
-            db.setBounds(0, 0, db.getMinimumWidth(), db.getMinimumHeight());
-            tv.setCompoundDrawables(null, null, db, null);
+            db.setBounds(0, 0, db.minimumWidth, db.minimumHeight)
+            tv.setCompoundDrawables(null, null, db, null)
         }
     }
-
-
 }

@@ -1,15 +1,36 @@
-package com.aversyk.librarybase.utils;
+package com.aversyk.librarybase.utils
 
-import android.app.Activity;
-import android.view.View;
-import android.view.ViewGroup;
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.view.MotionEvent
+import android.view.View
 
 /**
  * View常用工具类
  *
  * @author Averysk
  */
-public class ViewUtil {
+object ViewUtil {
+
+
+    /**
+     * 添加点击缩放效果
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    fun View.addClickScale(scale: Float = 0.9f, duration: Long = 150) {
+        this.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    this.animate().scaleX(scale).scaleY(scale).setDuration(duration).start()
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    this.animate().scaleX(1f).scaleY(1f).setDuration(duration).start()
+                }
+            }
+            // 点击事件处理，交给View自身
+            this.onTouchEvent(event)
+        }
+    }
 
     /**
      * 按比例设置布局
@@ -20,20 +41,20 @@ public class ViewUtil {
      * @param defaultWidth  默认宽度
      * @return 布局
      */
-    public static View setViewLayoutParams(Activity mContext, String width, String height, View view, double defaultHeight, double defaultWidth, int padding) {
-        int sw = DisplayUtil.getScreenWidth(mContext) - padding;
-        double originHeight = Double.parseDouble(height);
-        double originWidth = Double.parseDouble(width);
-        if (originHeight == 0 && defaultHeight != 0) {
-            originHeight = defaultHeight;
+    fun View.setViewLayoutParams(mContext: Activity?, width: String, height: String, defaultHeight: Double, defaultWidth: Double, padding: Int): View {
+        val sw = DisplayUtil.getScreenWidth(mContext) - padding
+        var originHeight = height.toDouble()
+        var originWidth = width.toDouble()
+        if (originHeight == 0.0 && defaultHeight != 0.0) {
+            originHeight = defaultHeight
         }
-        if (originWidth == 0 && defaultWidth != 0) {
-            originWidth = defaultWidth;
+        if (originWidth == 0.0 && defaultWidth != 0.0) {
+            originWidth = defaultWidth
         }
-        ViewGroup.LayoutParams lp = view.getLayoutParams();
-        lp.width = sw;
-        lp.height = (int) (sw * originHeight / originWidth);
-        view.setLayoutParams(lp);
-        return view;
+        val lp = this.layoutParams
+        lp.width = sw
+        lp.height = (sw * originHeight / originWidth).toInt()
+        this.layoutParams = lp
+        return this
     }
 }

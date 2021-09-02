@@ -1,19 +1,15 @@
-package com.aversyk.librarybase.utils;
+package com.aversyk.librarybase.utils
 
-import org.json.JSONObject;
-
-import java.util.Collection;
-import java.util.Map;
+import org.json.JSONObject
 
 /**
  * 通用的校验判断工具类
  *
  * @author Averysk
  */
-public class ValidateUtil {
+object ValidateUtil {
 
-
-    private static long lastClickTime;
+    private var lastClickTime: Long = 0// 两次点击间隔小于500毫秒
 
     /**
      * 防止控件被重复点击，如果点击间隔时间小于指定时间就点击无
@@ -23,15 +19,16 @@ public class ValidateUtil {
      *
      * @return boolean true: 再次点击小于XX毫秒(即双击事件), false: 没有重复点击(即单击事件)
      */
-    public static boolean isFastDoubleClick() {
-        long time = System.currentTimeMillis();
-        // 两次点击间隔小于500毫秒
-        if (time - lastClickTime < 500) {
-            return true;
+    val isFastDoubleClick: Boolean
+        get() {
+            val time = System.currentTimeMillis()
+            // 两次点击间隔小于500毫秒
+            if (time - lastClickTime < 500) {
+                return true
+            }
+            lastClickTime = time
+            return false
         }
-        lastClickTime = time;
-        return false;
-    }
 
     /**
      * 防止控件被重复点击，如果点击间隔时间小于指定时间就点击无
@@ -40,14 +37,14 @@ public class ValidateUtil {
      * @param times 自定义间隔时间(以 毫秒 为单位)
      * @return boolean true: 再次点击小于XX毫秒(即双击事件), false: 没有重复点击(即单击事件)
      */
-    public static boolean isFastDoubleClick(long times) {
-        long time = System.currentTimeMillis();
-        long timeD = time - lastClickTime;
-        if (0 < timeD && timeD < times) {
-            return true;
+    fun isFastDoubleClick(times: Long): Boolean {
+        val time = System.currentTimeMillis()
+        val timeD = time - lastClickTime
+        if (timeD in 1 until times) {
+            return true
         }
-        lastClickTime = time;
-        return false;
+        lastClickTime = time
+        return false
     }
 
     /**
@@ -55,8 +52,8 @@ public class ValidateUtil {
      *
      * @param jo 待校验的json对象
      */
-    public static boolean isEmptyJSONObject(JSONObject jo) {
-        return null == jo || "null".equals(jo.toString())  || "[]".equals(jo.toString()) || "".equals(jo.toString());
+    fun isEmptyJSONObject(jo: JSONObject?): Boolean {
+        return null == jo || "null" == jo.toString() || "[]" == jo.toString() || "" == jo.toString()
     }
 
     /**
@@ -64,8 +61,8 @@ public class ValidateUtil {
      *
      * @param jo 待校验的json对象
      */
-    public static boolean isNotEmptyJSONObject(JSONObject jo) {
-        return !isEmptyJSONObject(jo);
+    fun isNotEmptyJSONObject(jo: JSONObject?): Boolean {
+        return !isEmptyJSONObject(jo)
     }
 
     /**
@@ -73,8 +70,8 @@ public class ValidateUtil {
      *
      * @param o 待校验的对象
      */
-    public static boolean isEmptyObjectOrString(Object o) {
-        return null == o || "null".equals(o.toString().trim()) || "".equals(o.toString().trim());
+    fun isEmptyObjectOrString(o: Any?): Boolean {
+        return null == o || "null" == o.toString().trim { it <= ' ' } || "" == o.toString().trim { it <= ' ' }
     }
 
     /**
@@ -82,8 +79,8 @@ public class ValidateUtil {
      *
      * @param o 待校验的对象
      */
-    public static boolean isNotEmptyObjectOrString(Object o) {
-        return !isEmptyObjectOrString(o);
+    fun isNotEmptyObjectOrString(o: Any?): Boolean {
+        return !isEmptyObjectOrString(o)
     }
 
     /**
@@ -91,8 +88,8 @@ public class ValidateUtil {
      *
      * @param collection 待校验的collection(List: 数组, Set: 集合, Map: 表)
      */
-    public static boolean isEmptyCollection(Collection<?> collection) {
-        return null == collection || collection.size() == 0;
+    fun isEmptyCollection(collection: Collection<*>?): Boolean {
+        return null == collection || collection.isEmpty()
     }
 
     /**
@@ -100,18 +97,17 @@ public class ValidateUtil {
      *
      * @param collection 待校验的collection
      */
-    public static boolean isNotEmptyCollection(Collection<?> collection) {
-        return !isEmptyCollection(collection);
+    fun isNotEmptyCollection(collection: Collection<*>?): Boolean {
+        return !isEmptyCollection(collection)
     }
-
 
     /**
      * 校验：是否为空Map
      *
      * @param map 待校验的Map
      */
-    public static boolean isEmptyMap(Map<?, ?> map) {
-        return null == map || 0 == map.entrySet().size() || 0 == map.size();
+    fun isEmptyMap(map: Map<*, *>?): Boolean {
+        return null == map || map.entries.isEmpty() || map.isEmpty()
     }
 
     /**
@@ -120,10 +116,7 @@ public class ValidateUtil {
      * @param map 待校验的Map
      * @return boolean
      */
-    public static boolean isNotEmptyMap(Map<?, ?> map) {
-        return !isEmptyMap(map);
+    fun isNotEmptyMap(map: Map<*, *>?): Boolean {
+        return !isEmptyMap(map)
     }
-
-
-
 }
